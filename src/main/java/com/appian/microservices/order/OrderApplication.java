@@ -1,11 +1,14 @@
 package com.appian.microservices.order;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * Inventory application.
@@ -14,9 +17,17 @@ import org.slf4j.LoggerFactory;
  */
 @SpringBootApplication
 @RestController
-public class OrderApplication {
+public class OrderApplication extends WebMvcConfigurerAdapter {
 
-  private static Logger LOG = LoggerFactory.getLogger(OrderApplication.class);
+  @Autowired
+  private CorrelationIdFilter correlationIdFilter;
+
+  private final Logger LOG = LoggerFactory.getLogger(OrderApplication.class);
+
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(correlationIdFilter);
+  }
 
   @RequestMapping(value = "/orders")
   public String list() {

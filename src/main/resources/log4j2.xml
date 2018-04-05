@@ -3,7 +3,7 @@
 <!--TODO: to yaml; and move to config repo-->
 <Properties>
   <Property name="logPattern">
-    %d{yyyy-MM-dd HH:mm:ss.SSS} Order Service %5p [cor-555] %-30.30c{1.}: %m%n%ex
+    %d{yyyy-MM-dd HH:mm:ss.SSS} OrderService %5p [%X{CORRELATION-ID}] %-30.30c{1.}: %m%n%ex
   </Property>
   <Property name="logPath">
     logs
