@@ -23,7 +23,7 @@ hs_err_pid*
 
 build/
 .idea/
-gradle/
+# gradle/
 gradlew.bat
 *.iml
 gradlew
@@ -64,3 +64,4 @@ classes/
 **/build/
 **/bin/
 bin/
+out/
