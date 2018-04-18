@@ -15,6 +15,7 @@ public class OrderService {
 
   @Transactional
   public Order create(ShoppingCart shoppingCart) {
+
     Order order = new Order(shoppingCart.getUserId(), shoppingCart.getItems());
     return orderRepository.save(order);
   }
