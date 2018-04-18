@@ -24,9 +24,9 @@ hs_err_pid*
 build/
 .idea/
 # gradle/
-gradlew.bat
+# gradlew.bat
 *.iml
-gradlew
+# gradlew
 
 .classpath
 .project
