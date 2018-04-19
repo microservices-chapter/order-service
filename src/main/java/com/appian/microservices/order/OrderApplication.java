@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,10 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.oracle.tools.packager.Log;
-
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
 
 @SpringBootApplication
 @RestController
@@ -45,19 +45,27 @@ public class OrderApplication extends WebMvcConfigurerAdapter {
   @RequestMapping(value = "/orders")
   public @ResponseBody List<Order> list() {
     LOG.info("Received request at /orders endpoint");
-    List<Inventory> inventoryList = inventoryClient.getAllProducts();
-    LOG.info("Inventory has " + inventoryList.size() + " products");
     return orderService.getAllOrders();
   }
 
+  @RequestMapping(value = "/orders/{orderId}")
+  public @ResponseBody Order getOrderDetails(@PathVariable String orderId) {
+    LOG.info("Received request at /orders/{orderId} endpoint for order ID: " + orderId);
+    return orderService.getOrderDetails(orderId);
+  }
+
   @RequestMapping(method = RequestMethod.POST, value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody Order newOrder(@RequestBody ShoppingCart shoppingCart) {
-    return orderService.create(shoppingCart);
+  public @ResponseBody String newOrder(@RequestBody ShoppingCart shoppingCart) {
+    LOG.info("Received request at /create endpoint");
+    String newOrderId = orderService.create(shoppingCart, inventoryClient).getOrderId();
+    LOG.info("New Order Created. ID: " + newOrderId);
+    return newOrderId;
   }
 
   public static void main(String[] args) {
     inventoryClient = Feign.builder()
                         .contract(new SpringMvcContract())
+                        .encoder(new JacksonEncoder())
                         .decoder(new JacksonDecoder())
                         .target(InventoryClient.class, "http://localhost:8081");
     SpringApplication.run(OrderApplication.class, args);

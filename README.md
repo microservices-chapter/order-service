@@ -27,3 +27,9 @@ To test persistence (this will return all orders):
 ```
 curl -X GET http://localhost:8099/orders
 ```
+
+To insert a product into the Inventory Service:
+
+```
+curl -X PUT -H "Content-Type: application/json" -d '{"sku": "123-foo", "quantity": 12, "type": "increase"}' http://localhost:8081/products
+```
