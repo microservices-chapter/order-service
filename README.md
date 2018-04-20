@@ -6,6 +6,7 @@
 | METHOD | PATH | Accept | Body | DESCRIPTION |
 | ------ |----- | ------ |----- | ----------- |
 | **GET**    | orders |        |      | List all orders |
+| **GET**    | orders/*{orderId}* |        |      | Get details of a order |
 | **POST** | create | application/json | {"userId": "1", "items": [ {"uuid": "abc", "quantity": 23}, {"uuid": "def", "quantity": 16} ]} | Create a new order |
 
 ## Testing Locally ##
