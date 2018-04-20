@@ -7,5 +7,8 @@ spring:
       fail-fast: true
       password: foo
       username: user
-server:
-  port: 8099
+  data:
+    mongodb:
+      uri: mongodb://order-mongodb:27017/order
+#server:
+#  port: 8099

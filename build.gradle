@@ -7,15 +7,18 @@ buildscript {
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.6.RELEASE")
+    classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
   }
 }
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
 
 dependencyManagement {
   imports {
     mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Camden.RELEASE'
+    mavenBom 'org.springframework.cloud:spring-cloud-openfeign:2.0.0.M2'
   }
 }
 
@@ -24,6 +27,9 @@ targetCompatibility = 1.8
 
 repositories {
   mavenCentral()
+  maven {
+    url 'https://repo.spring.io/libs-milestone'
+  }
 }
 
 dependencies {
@@ -42,7 +48,11 @@ dependencies {
   compile ('org.springframework.cloud:spring-cloud-starter-config') {
     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
   }
+  compile ('org.springframework.cloud:spring-cloud-starter-openfeign') {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+  }
   compile 'org.springframework.boot:spring-boot-starter-log4j2'
+  compile 'io.github.openfeign:feign-jackson'
 
   testCompile group: 'junit', name: 'junit', version: '4.12'
 }
