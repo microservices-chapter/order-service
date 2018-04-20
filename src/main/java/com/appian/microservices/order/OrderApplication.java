@@ -67,7 +67,7 @@ public class OrderApplication extends WebMvcConfigurerAdapter {
                         .contract(new SpringMvcContract())
                         .encoder(new JacksonEncoder())
                         .decoder(new JacksonDecoder())
-                        .target(InventoryClient.class, "http://localhost:8080/inventory");
+                        .target(InventoryClient.class, "http://api-gateway:8080/inventory");
     SpringApplication.run(OrderApplication.class, args);
   }
 }
