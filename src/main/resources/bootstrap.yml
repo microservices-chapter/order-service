@@ -10,5 +10,9 @@ spring:
   data:
     mongodb:
       uri: mongodb://order-mongodb:27017/order
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
 #server:
 #  port: 8099
