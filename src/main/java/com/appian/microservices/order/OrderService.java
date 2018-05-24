@@ -19,6 +19,7 @@ public class OrderService {
 
   private final Logger LOG = LoggerFactory.getLogger(OrderService.class);
 
+  @HystrixCommand (fallbackMethod = "fallback_emptyOrder")
   @Transactional
   public Order create(ShoppingCart shoppingCart, InventoryClient inventoryClient) {
     for (OrderItem orderItem : shoppingCart.getItems()) {
@@ -39,14 +40,27 @@ public class OrderService {
   }
 
 
-  @HystrixCommand (commandKey = "Test")
+  @HystrixCommand (fallbackMethod = "fallback_getAllOrders")
   @Transactional
   public List<Order> getAllOrders() {
     return new ArrayList<>(orderRepository.findAll());
   }
 
+  @HystrixCommand (fallbackMethod = "fallback_emptyOrder")
   @Transactional
   public Order getOrderDetails(String orderId) {
     return orderRepository.findByOrderId(orderId);
+  }
+
+  private List<Order> fallback_getAllOrders() {
+    return new ArrayList<>();
+  }
+
+  private Order fallback_emptyOrder(ShoppingCart shoppingCart, InventoryClient inventoryClient) {
+    return new Order();
+  }
+
+  private Order fallback_emptyOrder(String orderId) {
+    return new Order();
   }
 }

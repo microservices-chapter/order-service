@@ -34,3 +34,17 @@ To insert a product into the Inventory Service:
 ```
 curl -X PUT -H "Content-Type: application/json" -d '{"sku": "123-foo", "quantity": 12, "type": "increase"}' http://localhost:8081/products
 ```
+
+When running in Docker:
+
+Test Order Service:
+curl -X GET http://localhost:8080/order/orders
+
+Test Order Service Hystrix Stream in a browser:
+http://localhost:8080/order/hystrix.stream
+
+Test the monitoring dashboard:
+http://localhost:9000/hystrix
+
+Enter the following in the stream: http://api-gateway:8080/order/hystrix.stream
+
