@@ -8,6 +8,7 @@ buildscript {
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.6.RELEASE")
     classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
+    classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
   }
 }
 
@@ -19,6 +20,7 @@ dependencyManagement {
   imports {
     mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Camden.RELEASE'
     mavenBom 'org.springframework.cloud:spring-cloud-openfeign:2.0.0.M2'
+    mavenBom 'org.springframework.cloud:spring-cloud-netflix:2.0.0.RC1'
   }
 }
 
@@ -33,9 +35,9 @@ repositories {
 }
 
 dependencies {
-  compile ('org.springframework.boot:spring-boot-starter') {
-    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-  }
+//  compile ('org.springframework.boot:spring-boot-starter') {
+//    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+//  }
   compile ('org.springframework.boot:spring-boot-starter-web') {
     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
   }
@@ -48,7 +50,13 @@ dependencies {
   compile ('org.springframework.cloud:spring-cloud-starter-config') {
     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
   }
+  compile ('org.springframework.cloud:spring-cloud-starter-eureka') {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+  }
   compile ('org.springframework.cloud:spring-cloud-starter-openfeign') {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+  }
+  compile ('org.springframework.cloud:spring-cloud-starter-hystrix') {
     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
   }
   compile 'org.springframework.boot:spring-boot-starter-log4j2'

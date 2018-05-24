@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.http.MediaType;
@@ -26,6 +28,8 @@ import feign.jackson.JacksonEncoder;
 @SpringBootApplication
 @RestController
 @EnableFeignClients
+@EnableCircuitBreaker
+@EnableHystrix
 public class OrderApplication extends WebMvcConfigurerAdapter {
 
   @Autowired

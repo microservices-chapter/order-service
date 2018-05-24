@@ -12,3 +12,11 @@ spring:
       uri: mongodb://order-mongodb:27017/order
 #server:
 #  port: 8099
+management:
+#  security:
+#    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+      base-path: /
